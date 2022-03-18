@@ -1,0 +1,36 @@
+{% extends layout %}
+{% block  content %}
+<main class="container mt-3">
+    {% include 'components/taskform.njk' %}
+    <div>
+        <ul class="list-group">
+        {% for meeps in meeps %}
+            <li class="list-group-item d-flex justify-content-between">
+                {{meeps.meeps}}
+                <div class="d-flex">
+                    <div class="form-check me-3">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value="{{meeps.completed}}"
+                            name="meeps-{{meeps.id}}"
+                            id="meeps-{{meeps.id}}"
+                            {% if meeps.completed %}checked{% endif %}>
+                        <label
+                            class="form-check-label"
+                            for="meeps-{{meeps.id}}">
+                            Completed
+                        </label>
+                    </div>
+                    <a
+                        href="/meeps/{{meeps.id}}/delete"
+                        class="btn btn-sm btn-danger">
+                        Delete meeps
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</main>
+{% endblock %}
