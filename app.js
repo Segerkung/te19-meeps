@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
+const nunjucks = require('nunjucks')
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
@@ -26,6 +27,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/meeps', meepsRouter);
+
+nunjucks.configure('views', {
+  autoescape: true,
+  express: app
+});
 
 
 module.exports = app;
