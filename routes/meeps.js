@@ -10,25 +10,21 @@ const pool = require('../database');
     DELETE /:id - Delete a task by id
 */
 router.get('/', async (req, res, next) => {
-    const flash = req.session.flash;
-    console.log(flash);
-    req.session.flash = null;
     await pool
         .promise()
-        .query('SELECT * FROM tasks ORDER BY updated_at DESC')
+        .query('SELECT * FROM meeps')
         .then(([rows, fields]) => {
-            res.render('tasks.njk', {
-                flash: flash,
-                tasks: rows,
-                title: 'Tasks',
+            res.render('meeps.njk', {
+                meeps: rows,
+                title: 'meeps',
                 layout: 'layout.njk',
             });
         })
         .catch((err) => {
             console.log(err);
             res.status(500).json({
-                tasks: {
-                    error: 'Error getting tasks',
+                meeps: {
+                    error: 'Error getting meeps',
                 },
             });
         });
@@ -45,7 +41,7 @@ router.get('/:id', async (req, res, next) => {
     }
     await pool
         .promise()
-        .query('SELECT * FROM tasks WHERE id = ?', [id])
+        .query('SELECT * FROM meeps WHERE id = ?', [id])
         .then(([rows, fields]) => {
             res.json({
                 task: {
@@ -57,7 +53,7 @@ router.get('/:id', async (req, res, next) => {
             console.log(err);
             res.status(500).json({
                 task: {
-                    error: 'Error getting tasks',
+                    error: 'Error getting meeps',
                 },
             });
         });
@@ -74,21 +70,19 @@ router.get('/:id/delete', async (req, res, next) => {
     }
     await pool
         .promise()
-        .query('DELETE FROM tasks WHERE id = ?', [id])
+        .query('DELETE FROM meeps WHERE id = ?', [id])
         .then((response) => {
             if (response[0].affectedRows === 1) {
-                req.session.flash = 'Task deleted';
-                res.redirect('/tasks');
+                res.redirect('/meeps');
             } else {
-                req.session.flash = 'Task not found';
-                res.status(400).redirect('/tasks');
+                res.status(400).redirect('/meeps');
             }
         })
         .catch((err) => {
             console.log(err);
             res.status(500).json({
                 task: {
-                    error: 'Error getting tasks',
+                    error: 'Error getting meeps',
                 },
             });
         });
@@ -108,11 +102,10 @@ router.post('/', async (req, res, next) => {
 
     await pool
         .promise()
-        .query('INSERT INTO tasks (task) VALUES (?)', [task])
+        .query('INSERT INTO meeps (task) VALUES (?)', [meeps])
         .then((response) => {
             if (response[0].affectedRows === 1) {
-                req.session.flash = "Successfully added task";
-                res.redirect('/tasks');
+                res.redirect('/meeps');
             } else {
                 res.status(400).json({
                     task: {
@@ -125,7 +118,7 @@ router.post('/', async (req, res, next) => {
             console.log(err);
             res.status(500).json({
                 task: {
-                    error: 'Error getting tasks',
+                    error: 'Error getting meeps',
                 },
             });
         });

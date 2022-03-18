@@ -16,7 +16,8 @@
     "middleware": "^1.0.0",
     "morgan": "~1.9.1",
     "mysql2": "^2.3.3",
-    "node-sass-middleware": "^0.11.0"
+    "node-sass-middleware": "^0.11.0",
+    "nunjucks": "^3.2.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
