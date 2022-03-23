@@ -1,4 +1,5 @@
 const express = require('express');
+const req = require('express/lib/request');
 const router = express.Router();
 const pool = require('../database');
 /* 
@@ -29,6 +30,10 @@ router.get('/', async (req, res, next) => {
             });
         });
 });
+
+router.post ("/",(req, res)=>{
+    res.send('hej leo')
+})
 
 module.exports = router;
 
