@@ -33,7 +33,12 @@ router.get('/', async (req, res, next) => {
 
 router.post ("/",(req, res)=>{
     res.send('hej leo')
+    
+        
 })
+
+
+
 
 module.exports = router;
 
