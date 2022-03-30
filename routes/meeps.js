@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
         });
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
     const meep = req.body.meep;
 
     await pool.promise()
@@ -41,7 +41,7 @@ router.post('/', async (req, res, next) => {
             res.redirect('/meeps');
         } else {
             res.status(400).json({
-                meep: {
+                meeps: {
                     error: 'Invalid meep'
                 }
             });
