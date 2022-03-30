@@ -31,11 +31,31 @@ router.get('/', async (req, res, next) => {
         });
 });
 
-router.post ("/",(req, res)=>{
-    res.send('hej leo')
-    
-        
-})
+router.post('/', async (req, res, next) => {
+    const meep = req.body.meep;
+
+    await pool.promise()
+    .query('INSERT INTO meeps (body) VALUES(?)', [meep])
+    .then((response) => {
+        if (response[0].affectedRows == 1) {
+            res.redirect('/meeps');
+        } else {
+            res.status(400).json({
+                meep: {
+                    error: 'Invalid meep'
+                }
+            });
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            meeps: {
+                error: 'Invalid meep'
+            }
+        })
+    });
+});
 
 
 
@@ -43,7 +63,6 @@ router.post ("/",(req, res)=>{
 module.exports = router;
 
 /*
-
     await pool
     .promise()
     .query('SELECT * FROM users')
@@ -58,5 +77,4 @@ module.exports = router;
             error: 'Database error',
         });
     });
-
     */
