@@ -13,7 +13,7 @@ const pool = require('../database');
 router.get('/', async (req, res, next) => {
     await pool
         .promise()
-        .query('SELECT * FROM meeps')
+        .query('SELECT * FROM leoseg_meeps')
         .then(([rows, fields]) => {
             res.render('meeps.njk', {
                 meeps: rows,
@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
     const meep = req.body.meep;
 
     await pool.promise()
-    .query('INSERT INTO meeps (body) VALUES(?)', [meep])
+    .query('INSERT INTO leoseg_meeps (body) VALUES(?)', [meep])
     .then((response) => {
         if (response[0].affectedRows == 1) {
             res.redirect('/meeps');
